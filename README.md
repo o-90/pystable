@@ -1,5 +1,10 @@
 # stable
-alpha stable distributions in C++
+python wrapper for alpha stable distributions in C++
+
+### build image
+```shell
+$ make build-image
+```
 
 ### build
 ```shell
