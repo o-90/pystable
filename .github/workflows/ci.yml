@@ -1,0 +1,16 @@
+name: master
+
+on: [push]
+
+jobs:
+  build:
+    name: building project
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      - name: build-project
+        run: make build
+      - name: test-project
+        run: make test
+      - name: clean-project
+        run: make clean
