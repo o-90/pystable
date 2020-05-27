@@ -101,9 +101,18 @@ test-local: test-local-lint
 test-local-lint:
 	flake8 stable --filename="*.py" --ignore E111
 
+.PHONY: clean
 clean:
+	docker run --rm \
+		-v `pwd`:/app \
+		-w /app \
+		$(PREFIX)/$(IMAGE):$(TAG) \
+		make clean-local
+
+clean-local:
 	$(RM) -rf dist
 	$(RM) -rf $(BUILD_DIR)
 	$(RM) -rf $(PROJECT_DIR)/$(LIB_DIR)/*.so
 	$(RM) *.o
 	$(RM) *.so
+	$(RM) -rf .pytest_cache

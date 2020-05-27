@@ -12,3 +12,5 @@ jobs:
         run: make build
       - name: test-project
         run: make test
+      - name: clean-project
+        run: make clean
