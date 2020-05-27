@@ -11,4 +11,4 @@ jobs:
       - name: build-project
         run: make build
       - name: test-project
-      - run: make test
+        run: make test
