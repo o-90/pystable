@@ -23,7 +23,7 @@ ENV LANG C.UTF-8
 
 RUN apt-get update \
   && apt-get install gcc g++ git cmake libgsl-dev libblas-dev \
-    build-essential gdb vim tmux -y \
+    build-essential gdb -y \
   && rm -rf /var/lib/lists/*
 
 ARG GH_TOKEN
@@ -39,9 +39,7 @@ RUN git clone https://gobrewers14@github.com/gobrewers14/libstable.git /libstabl
 
 RUN set -ex \
  && pip install --upgrade --no-cache-dir pip \
- && pip install --upgrade --no-cache-dir \
-   pytest numpy flake8 jupyter pandas numpy \
-   scipy seaborn matplotlib
+ && pip install --upgrade --no-cache-dir pytest numpy flake8
 
 ARG PYBIND11_VERSION
 RUN set -ex \
