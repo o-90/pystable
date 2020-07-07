@@ -14,5 +14,11 @@ $ make build
 ```
 
 ### test
+```shell
+$ make test
+```
+
+### run in docker
+```
 $ ./stable/scripts/run_docker.sh
 ```
