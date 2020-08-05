@@ -3,11 +3,12 @@
 
 #include <stable.h>
 
-StableDist* AlphaFit(double* x, const int length);
-double* AlphaSimulator(int size,
-                        double alpha,
-                        double beta,
-                        double mu,
-                        double sigma);
-
+extern "C" {
+  StableDist* AlphaFit(double* x, const int length);
+  double* AlphaSimulator(int size,
+                         double alpha,
+                         double beta,
+                         double mu,
+                         double sigma);
+} // end extern "C"
 #endif  // ALPHA_STABLE_H_ 

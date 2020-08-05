@@ -26,20 +26,21 @@ set(Python_TARGET_VERSION "3.7.7")
 # g++ flags
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_CXX_FLAGS "-Wall -pthread -shared")
 
 if (NOT BUILD_TYPE)
-  set(BUILD_TYPE debug)
+  set(BUILD_TYPE Debug)
 endif()
 
-if (${BUILD_TYPE} EQUAL "debug")
+if (${BUILD_TYPE} EQUAL "Debug")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ggdb")
 endif()
 
-if (${BUILD_TYPE} EQUAL "testing")
+if (${BUILD_TYPE} EQUAL "Testing")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 endif()
 
-if (${BUILD_TYPE} EQUAL "release")
+if (${BUILD_TYPE} EQUAL "Release")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNDEBUG -O3")
 endif()
 

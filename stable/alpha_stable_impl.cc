@@ -15,25 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * =========================================================================*/
 
-#include "stable/alpha_stable.h"
-
 #include <string>
 #include <vector>
 #include <unordered_map>
 
+#include "stable/alpha_stable.h"
+
 #include <stable.h>  // make sure this is always imported last
-
-using namespace pybind11;
-
-// C
-extern "C" {
-  StableDist* AlphaFit(double* x, const int length);
-  double* AlphaSimulator(int size,
-                         double alpha,
-                         double beta,
-                         double mu,
-                         double sigma);
-} // end extern "C"
 
 // implementations
 std::unordered_map<std::string, double> AlphaStableFit(std::vector<double>& v) {
