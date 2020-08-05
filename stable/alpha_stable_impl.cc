@@ -15,12 +15,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * =========================================================================*/
 
+#include "stable/alpha_stable.h"
+
 #include <string>
 #include <vector>
 #include <unordered_map>
 
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
 #include <stable.h>  // make sure this is always imported last
 
 using namespace pybind11;
@@ -67,12 +67,4 @@ std::vector<double> AlphaStableSimulator(int size,
   }
 
   return output;
-}
-
-// modules
-PYBIND11_MODULE(alpha_stable, m) {
-  m.doc() = "alpha-stable distribution fitting wrapper";
-  m.def("_alpha_stable_fit", &AlphaStableFit);
-  m.doc() = "simulate n number of alpha-stable random variables";
-  m.def("_alpha_stable_sim", &AlphaStableSimulator);
 }
