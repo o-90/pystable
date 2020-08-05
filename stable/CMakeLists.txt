@@ -63,6 +63,13 @@ set(STABLE_CORE_FILES
 # lib
 add_library(stable_core OBJECT ${STABLE_CORE_FILES})
 
+# -lblas -lgsl -lm -lgslcblas -lstable
+link_libraries(stable_core blas)
+link_libraries(stable_core gsl)
+link_libraries(stable_core m)
+link_libraries(stable_core gslcblas)
+link_libraries(stable_core stable)
+
 # objects
 set(STABLE_OBJECTS $<TARGET_OBJECTS:stable_core>)
 
