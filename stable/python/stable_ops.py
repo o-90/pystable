@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-#
-# Copyright (c) John Martinez, 2020.
+# Copyright (c) 2020 John Martinez <gobrewers14@protonmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,8 +17,7 @@
 # ============================================================================
 """collection of alpha-stable distribution ops."""
 
-from alpha_stable import _alpha_stable_fit
-from alpha_stable import _alpha_stable_sim
+import pystable
 
 
 def alpha_stable_fit(time_series):
@@ -41,7 +39,7 @@ def alpha_stable_fit(time_series):
           'alpha': 1.9857327983276232
         }
   """
-  dic = _alpha_stable_fit(time_series)
+  dic = pystable._alpha_stable_fit(time_series)
   return dic
 
 
@@ -66,5 +64,5 @@ def alpha_stable_sim(num_samples, alpha, beta, mu, sigma):
          ...
          0.06804660324189649]
   """
-  vec = _alpha_stable_sim(num_samples, alpha, beta, mu, sigma)
+  vec = pystable._alpha_stable_sim(num_samples, alpha, beta, mu, sigma)
   return vec

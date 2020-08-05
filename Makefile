@@ -1,5 +1,4 @@
-#
-# Copyright (c) John Martinez, 2020.
+# Copyright (c) 2020 John Martinez <gobrewers14@protonmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,40 +15,13 @@
 # ============================================================================
 SHELL := /bin/bash
 
-# docker ---------------------------------------------------------------------
 PREFIX := demiurge
 IMAGE := stable
 TAG := latest
 
-# python ---------------------------------------------------------------------
 PY_VERSION := 3.7.3
-
-# pybind11
 PYBIND11_VERSION := 2.4.3
-
-# c/c++ ----------------------------------------------------------------------
-GCC := gcc
-GXX := g++
-FLAGS := -Wall -O3 -pthread -shared -fPIC
-GCCFLAGS := $(FLAGS) -std=c99
-GXXFLAGS := $(FLAGS) -std=c++11
-LDFLAGS := -lblas -lgsl -lm -lgslcblas -lstable
 PROJECT_DIR := stable
-BUILD_DIR := build
-LIB_DIR := lib
-SUFFIX := .cpython-37m-x86_64-linux-gnu.so
-SO_NAME := alpha_stable
-SRC_DIR := $(PROJECT_DIR)/src
-C_SRCS := $(shell find $(SRC_DIR) -name '*.c')
-OBJS := $(C_SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
-CC_SRCS := $(shell find $(SRC_DIR) -name '*.cc')
-OBJS := $(OBJS) $(CC_SRCS:$(SRC_DIR)/%.cc=$(BUILD_DIR)/%.o)
-DEPS := $(OBJS:.o=.d)
-INCLUDES := -I/usr/local/include/python3.7m -I/root/.local/include/python3.7m
-
-echo:
-	@echo "objects: $(OBJS)"
-	@echo "dependencies: $(DEPS)"
 
 .PHONY: build-image
 build-image:
@@ -68,24 +40,13 @@ build:
 		$(PREFIX)/$(IMAGE):$(TAG) \
 		make build-local
 
-build-local: dirs $(PROJECT_DIR)/$(LIB_DIR)/$(SO_NAME)$(SUFFIX)
-
-dirs:
-	@echo "creating build/ directory"
-	@mkdir -p $(BUILD_DIR)/$(LIB_DIR)
-	@mkdir -p $(PROJECT_DIR)/$(LIB_DIR)
-
-$(PROJECT_DIR)/$(LIB_DIR)/$(SO_NAME)$(SUFFIX): $(OBJS)
-	@echo "linking: $@"
-	$(GXX) $(GXXFLAGS) $(INCLUDES) $(OBJS) -o $@ $(LDFLAGS)
-
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
-	@echo "compiling: $< -> $@"
-	$(GCC) $(GCCFLAGS) -MP -MMD -c $< -o $@
-
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cc
-	@echo "compiling: $< -> $@"
-	$(GXX) $(GXXFLAGS) $(INCLUDES) -MP -MMD -c $< -o $@ $(LDFLAGS)
+build-local:
+	mkdir -p $(PROJECT_DIR)/build \
+		&& cd $(PROJECT_DIR)/build \
+		&& cmake -DPython_TARGET_VERSION="3.7.7" -DBUILD_TYPE=debug ../ \
+		&& make \
+		&& cd ../ \
+		&& rm -rf build
 
 .PHONY: test
 test:
@@ -113,9 +74,9 @@ clean-py:
 	$(shell find stable -name "*.py[co]" -o -name __pycache__ -exec rm -rf {} +)
 
 clean-local: clean-py
-	$(RM) -rf dist
-	$(RM) -rf .pytest_cache
-	$(RM) -rf $(BUILD_DIR)
-	$(RM) -rf $(PROJECT_DIR)/$(LIB_DIR)
+	$(RM) -rf $(PROJECT_DIR)/build
+	$(RM) -rf dist/
+	$(RM) -rf build/
+	$(RM) -rf .pytest_cache/
 	$(RM) *.o
 	$(RM) *.so

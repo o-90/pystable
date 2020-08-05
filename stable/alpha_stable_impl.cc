@@ -1,16 +1,16 @@
 /*
- * Copyright (c) John Martinez, 2020.
+ * Copyright (c) 2020 John Martinez <gobrewers14@protonmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * =========================================================================*/
@@ -19,21 +19,9 @@
 #include <vector>
 #include <unordered_map>
 
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
+#include "stable/alpha_stable.h"
+
 #include <stable.h>  // make sure this is always imported last
-
-using namespace pybind11;
-
-// C
-extern "C" {
-  StableDist* AlphaFit(double* x, const int length);
-  double* AlphaSimulator(int size,
-                         double alpha,
-                         double beta,
-                         double mu,
-                         double sigma);
-} // end extern "C"
 
 // implementations
 std::unordered_map<std::string, double> AlphaStableFit(std::vector<double>& v) {
@@ -67,12 +55,4 @@ std::vector<double> AlphaStableSimulator(int size,
   }
 
   return output;
-}
-
-// modules
-PYBIND11_MODULE(alpha_stable, m) {
-  m.doc() = "alpha-stable distribution fitting wrapper";
-  m.def("_alpha_stable_fit", &AlphaStableFit);
-  m.doc() = "simulate n number of alpha-stable random variables";
-  m.def("_alpha_stable_sim", &AlphaStableSimulator);
 }
