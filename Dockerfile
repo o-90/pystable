@@ -15,18 +15,27 @@
 # ============================================================================
 
 ARG PY_VERSION
-FROM python:${PY_VERSION}
+FROM python:${PY_VERSION} as base
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG C.UTF-8
 
 RUN apt-get update \
-  && apt-get install gcc g++ git cmake libgsl-dev libblas-dev \
-    build-essential gdb -y \
+  && apt-get -y install \
+    gcc \
+    g++ \
+    git \
+    cmake \
+    libgsl-dev \
+    libblas-dev \
+    build-essential \
+    gdb \
   && rm -rf /var/lib/lists/*
 
-ARG GH_TOKEN
-RUN git clone https://gobrewers14@github.com/gobrewers14/libstable.git /libstable \
+RUN set -ex \
+  && git clone \
+    https://gobrewers14@github.com/gobrewers14/libstable.git \
+    /libstable \
   && cd /libstable/stable \
   && mkdir libs \
   && cd .. \
@@ -56,13 +65,5 @@ RUN set -ex \
   && pip install -U --user --no-cache-dir ./dist/* \
   && cd ../ \
   && rm -rf pybind11
-
-EXPOSE 4747
-WORKDIR /app
-
-ARG PROJECT_DIR
-ENV PYTHONPATH=/app
-ENV PYTHONPATH=$PYTHONPATH:/app/${PROJECT_DIR}
-ENV PYTHONPATH=$PYTHONPATH:/app/${PROJECT_DIR}/lib
 
 CMD ["/bin/bash"]

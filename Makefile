@@ -19,16 +19,15 @@ PREFIX := demiurge
 IMAGE := stable
 TAG := latest
 
-PY_VERSION := 3.7.3
+PY_VERSION := 3.7.7
 PYBIND11_VERSION := 2.4.3
-PROJECT_DIR := stable
+# PROJECT_DIR := stable
 
 .PHONY: build-image
 build-image:
 	docker build \
 		--build-arg PY_VERSION=$(PY_VERSION) \
 		--build-arg PYBIND11_VERSION=$(PYBIND11_VERSION) \
-		--build-arg PROJECT_DIR=$(PROJECT_DIR) \
 		-t $(PREFIX)/$(IMAGE):$(TAG) \
 		-f Dockerfile .
 
