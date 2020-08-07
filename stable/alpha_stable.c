@@ -24,7 +24,7 @@ StableDist* AlphaFit(double* x, const int length) {
   // initial parameter values
   double init_alpha = 1.0;
   double init_beta = 0.5;
-  double init_sigma= 1.0;
+  double init_sigma = 1.0;
   double init_mu = 1.0;
   int param = 0;
 
@@ -36,8 +36,12 @@ StableDist* AlphaFit(double* x, const int length) {
     param);
 
   stable_fit_init(dist, x, length, NULL, NULL);
-  stable_fit_koutrouvelis(dist, x, length);
-
+  int msg = stable_fit_koutrouvelis(dist, x, length);
+  if (msg == 0) {
+    printf("[+] fitting procedure successful.\n");
+  } else {
+    printf("[-] fitting procedure did not converge.\n");
+  }
   return dist;
 }
 
@@ -47,15 +51,17 @@ double* AlphaSimulator(int size,
                        double sigma,
                        double mu) {
   // initialize dist
-  int param = 0;
-  StableDist* dist = stable_create(alpha, beta, sigma, mu, param);
+  StableDist* dist = stable_create(alpha, beta, sigma, mu, 0);
 
   // initialize random vector
   double* rnd;
   rnd = malloc(sizeof(double) * size);
 
+  // randomize
   stable_rnd_seed(dist, time(NULL));
   stable_rnd(dist, rnd, size);
 
+  // free memory
+  stable_free(dist);
   return rnd;
 }

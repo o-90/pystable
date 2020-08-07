@@ -28,6 +28,6 @@ std::unordered_map<std::string, double> AlphaStableFit(std::vector<double>& v);
 std::vector<double> AlphaStableSimulator(int size,
                                          double alpha,
                                          double beta,
-                                         double mu,
-                                         double sigma);
+                                         double sigma,
+                                         double mu);
 #endif  // ALPHA_STABLE_IMPL_H_
