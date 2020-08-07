@@ -66,4 +66,6 @@ RUN set -ex \
   && cd ../ \
   && rm -rf pybind11
 
+EXPOSE 9999
+
 CMD ["/bin/bash"]

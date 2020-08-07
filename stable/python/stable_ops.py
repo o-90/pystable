@@ -43,7 +43,7 @@ def alpha_stable_fit(time_series):
   return dic
 
 
-def alpha_stable_sim(num_samples, alpha, beta, mu, sigma):
+def alpha_stable_sim(num_samples, alpha, beta, sigma, mu):
   """
   Args:
     num_samples: int, the number of samples you want to generate
@@ -64,5 +64,5 @@ def alpha_stable_sim(num_samples, alpha, beta, mu, sigma):
          ...
          0.06804660324189649]
   """
-  vec = pystable._alpha_stable_sim(num_samples, alpha, beta, mu, sigma)
+  vec = pystable._alpha_stable_sim(num_samples, alpha, beta, sigma, mu)
   return vec

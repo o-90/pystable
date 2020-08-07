@@ -45,9 +45,9 @@ std::unordered_map<std::string, double> AlphaStableFit(std::vector<double>& v) {
 std::vector<double> AlphaStableSimulator(int size,
                                          double alpha,
                                          double beta,
-                                         double mu,
-                                         double sigma) {
-  double* out = AlphaSimulator(size, alpha, beta, mu, sigma);
+                                         double sigma,
+                                         double mu) {
+  double* out = AlphaSimulator(size, alpha, beta, sigma, mu);
   std::vector<double> output;
 
   for (int i = 0; i < size; ++i) {

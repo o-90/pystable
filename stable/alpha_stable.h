@@ -15,8 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * =========================================================================*/
 
-#ifndef ALPHA_STABLE_H_ 
-#define ALPHA_STABLE_H_ 
+#ifndef ALPHA_STABLE_H_
+#define ALPHA_STABLE_H_
 
 #include <stable.h>
 
@@ -25,7 +25,7 @@ extern "C" {
   double* AlphaSimulator(int size,
                          double alpha,
                          double beta,
-                         double mu,
-                         double sigma);
+                         double sigma,
+                         double mu);
 } // end extern "C"
-#endif  // ALPHA_STABLE_H_ 
+#endif  // ALPHA_STABLE_H_
